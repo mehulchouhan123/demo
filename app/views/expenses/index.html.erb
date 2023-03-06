@@ -1,0 +1,57 @@
+<%=render "form"%>
+<h3>
+You can find your expenses
+  <small class="text-muted"> by specific categorey</small>
+</h3>
+<div>
+<%= form_with url: "/expenses" do |form| %>
+
+<%= form.check_box :education %>
+<%= form.label :"Education" %>
+<%= form.check_box :food %>
+<%= form.label  "food" %>
+<%= form.check_box :clothe %>
+<%= form.label  "Clothes" %>
+<%= form.check_box :homerent %>
+<%= form.label  "Home rent" %>
+<%= form.check_box :vehical%>
+<%= form.label  "Vehical" %>
+ <%=form.label "Type:"%>
+<%= form.select :date, ["Today", "Last week", "Last month","Last year"], autofocus: true%>
+
+
+<%=form.submit :search%>
+
+<%end%>
+</div>
+<table class="table" class="table-primary">
+  <thead>
+    <tr >
+      <th scope="col">Title</th>
+      <th scope="col">Price</th>
+      <th scope="col">Type</th>
+      <th scope="col">show</th>
+      <th scope="col">Edit</th>
+      <th scope="col">Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+     <%@expenses.each do |e|%>
+  <tr>
+    <td><%=e.title%></td>
+    <td><%=e.price%></td>
+    <td><%=e.type_of_expenses%></td>
+    <td><%=link_to "show", "/expenses/#{e.id}"%></td>
+    <td><%=link_to "Edit", "/expenses/#{e.id}/edit"%></td>
+    <td><%= link_to "Destroy", "/expenses/#{e.id}" , data: {
+                    turbo_method: :delete
+                    
+                  } %></td>
+    
+  </tr>
+  </tbody>
+  <%end%>
+</table>
+
+
+

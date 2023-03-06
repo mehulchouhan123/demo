@@ -1,0 +1,31 @@
+<div class="container ">
+
+<%=form_with model:@expense do |f|%>
+  <div class="field ">
+  
+    <%= f.label :"Title" %><br />
+    <%= f.text_field :title, autofocus: true, autocomplete: "title" %>
+    </div>
+    <div>
+    <%= f.label "price:" %><br />
+    <%= f.text_field :price, autofocus: true, autocomplete: "price" %>
+    </div>
+    <div>
+    <%= f.label "Date:" %><br />
+    <%=  f.date_field :date, autofocus: true, autocomplete: "date" %>
+    </div>
+    <div>
+  <%=f.label "Type:"%>
+<%= f.select :type_of_expenses, ["Education", "clothes", "food","Home rent","vehical"], autofocus: true%>
+  </div>
+
+ 
+
+ 
+
+  <div class="actions">
+    <%= f.submit "Save" %>
+  </div>
+<% end %>
+
+</div>
