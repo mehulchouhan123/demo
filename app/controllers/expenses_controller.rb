@@ -14,7 +14,7 @@ class ExpensesController < ApplicationController
       @expenses=Expense.where("date>=? AND user_id=?",Date.today,c_id)
       if params[:date]!=nil
 
-      @expenses=Expense.where("date>=? AND user_id=?",params[:date],c_id)
+        @expenses=Expense.where("date>=? AND user_id=?",params[:date],c_id)
       end
       # debugger
       if params[:array]!=nil
@@ -22,10 +22,10 @@ class ExpensesController < ApplicationController
           @expenses=Expense.where("type_of_expenses=? AND date>=? AND user_id=?",params[:array][0],params[:date],c_id)
         elsif  params[:array].size==2
           # debugger
-          @expenses=Expense.where("type_of_expenses=? OR type_of_expenses=?AND date>=?AND user_id=?",params[:array][0], params[:array][1],params[:date],c_id)
+          @expenses=Expense.where("(type_of_expenses=? OR type_of_expenses=?)AND date>=?AND user_id=?",params[:array][0], params[:array][1],params[:date],c_id)
         elsif params[:array].size==3
           # debugger
-          @expenses=Expense.where("type_of_expenses=? OR type_of_expenses=? OR  type_of_expenses=? AND date>=? AND user_id=?",params[:array][0],params[:array][1],params[:array][2],params[:date],c_id)
+          @expenses=Expense.where("(type_of_expenses=? OR type_of_expenses=? OR  type_of_expenses=?) AND date>=? AND user_id=?",params[:array][0],params[:array][1],params[:array][2],params[:date],c_id)
         end
       end
     end
@@ -70,11 +70,18 @@ class ExpensesController < ApplicationController
 
   def edit
     @expense=Expense.find(params[:id])
+    @date=@expense.date
 
   end
   def destroy
     @expense=Expense.find(params[:id])
     @expense.destroy
+  end
+  def update
+    @expense=Expense.find(params[:id])
+    @expense.update(param_expense)
+    redirect_to root_path
+    
   end
   private
   def param_expense
