@@ -1,4 +1,6 @@
-<div class="container">
+
+
+<div class="container ">
 
 <%=form_with model:@expense do |f|%>
   <div class="field ">
@@ -16,7 +18,7 @@
     </div>
     <div>
   <%=f.label "Type:"%>
-<%= f.select :type_of_expenses, ["Education", "Clothes", "Food","Home rent","Vehical"], autofocus: true%>
+<%= f.select :type_of_expenses, ["Education","Food","Housing","Transporation","Clothing"], autofocus: true%>
   </div>
 
  

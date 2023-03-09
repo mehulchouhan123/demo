@@ -13,7 +13,7 @@ class ExpensesController < ApplicationController
 
       @expenses=Expense.where("date>=? AND user_id=?",Date.today,c_id)
       if params[:date]!=nil
-
+        # debugger
         @expenses=Expense.where("date>=? AND user_id=?",params[:date],c_id)
       end
       # debugger
@@ -26,7 +26,13 @@ class ExpensesController < ApplicationController
         elsif params[:array].size==3
           # debugger
           @expenses=Expense.where("(type_of_expenses=? OR type_of_expenses=? OR  type_of_expenses=?) AND date>=? AND user_id=?",params[:array][0],params[:array][1],params[:array][2],params[:date],c_id)
+        elsif params[:array].size==4
+          @expenses=Expense.where("(type_of_expenses=? OR type_of_expenses=? OR  type_of_expenses=? OR type_of_expenses=? ) AND date>=? AND user_id=?",params[:array][0],params[:array][1],params[:array][2],params[:array][3],params[:date],c_id)
+        elsif params[:array].size==5
+          @expenses=Expense.where("(type_of_expenses=? OR type_of_expenses=? OR  type_of_expenses=? OR type_of_expenses=? OR
+            type_of_expenses=? ) AND date>=? AND user_id=?",params[:array][0],params[:array][1],params[:array][2],params[:array][3],params[:array][4],params[:date],c_id)
         end
+
       end
     end
     
@@ -40,8 +46,13 @@ class ExpensesController < ApplicationController
       cid=current_user.id
       expense=Expense.new(param_expense)
       expense.user_id=cid
-      expense.save!
-      redirect_to root_path
+      # expense.save!
+      if expense.save!
+        redirect_to root_path, notice: "Expenses is successfully added."
+      else
+        redirect_to root_path, alert: "Expenses is not added successfully."
+      end
+      # redirect_to root_path
     else
       @date=Date.today
       if params[:date]=="Last week"
@@ -50,9 +61,11 @@ class ExpensesController < ApplicationController
         @date=Date.today.ago(1.month).beginning_of_month
       elsif params[:date]=="Last year"
         @date=Date.today.ago(1.year).beginning_of_year
+      elsif params[:date]=="All"
+        @date=Expense.where("user_id=?",current_user.id).minimum("date")
       end
 
-      @hash={"Education"=>0,"Clothes"=>"0","Food"=>"0"}
+      @hash={"Education"=>"0","Food"=>"0","Housing"=>"0","Transporation"=>"0","Clothing"=>"0"}
       a=Array.new
       @hash.each do |k,v|
         v=params[k]

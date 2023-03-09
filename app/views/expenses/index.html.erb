@@ -7,17 +7,18 @@ You can find your expenses
 <%= form_with url: "/expenses" do |form| %>
 
 <%= form.check_box :Education %>
-<%= form.label :"Education" %>
-<%= form.check_box :Food %>
-<%= form.label  "food" %>
-<%= form.check_box :Clothes %>
-<%= form.label  "Clothes" %>
-<%=form.check_box :Homerent %> 
-<%=form.label  "Home rent" %> 
-<%=form.check_box :Vehical%> 
-<%= form.label  "Vehical" %> 
+<%= form.label "Education" %>
+<%= form.check_box :Food  %>
+<%= form.label  "Food" %>
+<%=form.check_box :Housing %> 
+<%=form.label  "Housing" %> 
+<%=form.check_box :Transporation%> 
+<%= form.label  "Transporation" %> 
+<%= form.check_box :Clothing %>
+<%= form.label  "Clothing" %>
  <%=form.label "Type:"%>
-<%= form.select :date, ["Today", "Last week", "Last month","Last year"], autofocus: true%>
+ 
+<%= form.select :date, ["Today", "Last week", "Last month","Last year","All"], autofocus: true%>
 
 
 <%=form.submit :search%>
@@ -32,19 +33,19 @@ You can find your expenses
       <th scope="col">Price</th>
       <th scope="col">Type</th>
       <th scope="col">DATE</th>
-      <th scope="col">show</th>
+      
       <th scope="col">Edit</th>
       <th scope="col">Delete</th>
     </tr>
   </thead>
   <tbody>
-     <%@expenses.each do |e|%>
+     <%@expenses.to_a.reverse.each do |e|%>
   <tr>
     <td><%=e.title%></td>
     <td><%=e.price%></td>
     <td><%=e.type_of_expenses%></td>
     <td><%=e.date%></td>
-    <td><%=link_to "show", "/expenses/#{e.id}"%></td>
+   
     <td><%=link_to "Edit", "/expenses/#{e.id}/edit"%></td>
     <td><%= link_to "Destroy", "/expenses/#{e.id}" , data: {
                     turbo_method: :delete
@@ -56,7 +57,5 @@ You can find your expenses
   <%end%>
 </table>
 <%end%>
-
-
 
 

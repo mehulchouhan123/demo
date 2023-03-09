@@ -5,7 +5,7 @@
 <%=form.text_field:price%><br>
 <%= form.date_field :date, :value => @date  %>
 <%=form.label "Type:"%>
-<%= form.select :type_of_expenses, ["Education", "clothes", "food"] %><br>
+<%= form.select :type_of_expenses, ["Education","Food","Housing","Transporation","Clothing"], autofocus: true%><br>
 
 <%=form.submit :submit%>
 <%end%>
