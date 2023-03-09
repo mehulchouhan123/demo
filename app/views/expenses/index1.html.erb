@@ -1,11 +1,9 @@
-
-<%=render "form"%><br>
-
+<%=render "form"%>
 <h3>
 You can find your expenses
   <small class="text-muted"> by specific categorey</small>
 </h3>
-<div><br>
+<div>
 <%= form_with url: "/expenses" do |form| %>
 
 <%= form.check_box :Education %>
@@ -26,7 +24,6 @@ You can find your expenses
 <%=form.submit :search%>
 
 <%end%>
-<br>
 </div>
 <%if !@expenses.empty?%>
 <table class="table" class="table-primary">
@@ -49,9 +46,11 @@ You can find your expenses
     <td><%=e.type_of_expenses%></td>
     <td><%=e.date%></td>
    
-   
-    <td><a type="button" class="btn btn-outline-success" href="/expenses/<%=e.id%>/edit">Edit</a></td>
-    <td><a type="button" class="btn btn-outline-success" data-turbo-method="delete" href="/expenses/<%=e.id%>">Destroy</a></td>
+    <td><%=link_to "Edit", "/expenses/#{e.id}/edit"%></td>
+    <td><%= link_to "Destroy", "/expenses/#{e.id}" , data: {
+                    turbo_method: :delete
+                    
+                  } %></td>
     
   </tr>
   </tbody>
