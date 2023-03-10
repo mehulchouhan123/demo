@@ -12,6 +12,7 @@ class ExpensesController < ApplicationController
       @expenses=Expense.where("date>=? AND user_id=?",Date.today,c_id)
       if params[:date]!=nil
         @expenses=Expense.where("date>=? AND user_id=?",params[:date],c_id)
+        @sum=Expense.where("date>=? AND user_id=?",params[:date],c_id).sum(:price)
       end
       if params[:array]!=nil
         if params[:array].size==1

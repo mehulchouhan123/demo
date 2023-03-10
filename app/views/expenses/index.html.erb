@@ -29,6 +29,11 @@ You can find your expenses
 <br>
 </div>
 <%if !@expenses.empty?%>
+<%sum=0%>
+<%@expenses.each do |e|%>
+<%sum+=e.price%>
+<%end%>
+<b>Total: </b><%=sum%><br>
 <table class="table" class="table-primary">
   <thead>
     <tr >
