@@ -1,14 +1,8 @@
 class ExpensesController < ApplicationController
+  
   def index
-    @expense=Expense.new
-# when user is sign out then below condition is execute
-    if !user_signed_in?
-      redirect_to new_user_session_path
-    end
-# for fetching data depent on condition
-    if @current_user!=nil
+      @expense=Expense.new
       c_id=current_user.id
-# by default when user on home page below query is executed
       @expenses=Expense.where("date>=? AND user_id=?",Date.today,c_id)
       if params[:date]!=nil
         @expenses=Expense.where("date>=? AND user_id=?",params[:date],c_id)
@@ -28,7 +22,6 @@ class ExpensesController < ApplicationController
             type_of_expenses=? ) AND date>=? AND user_id=?",params[:array][0],params[:array][1],params[:array][2],params[:array][3],params[:array][4],params[:date],c_id)
         end
       end
-    end
   end
   
   def create
@@ -88,6 +81,5 @@ class ExpensesController < ApplicationController
   private
   def param_expense
     params.require(:expense).permit(:title,:price,:type_of_expenses,:date)
-  end
-  
+  end 
 end
